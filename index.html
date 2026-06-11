@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안전제일! 건설안전 교육 센터</title>
+    <style>
+        :root {
+            --primary-color: #0f4c81;
+            --secondary-color: #1e88e5;
+            --bg-light: #f5f9fc;
+            --text-dark: #2c3e50;
+            --white: #ffffff;
+            --accent-color: #e53935;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+
+        nav { display: flex; gap: 1.5rem; }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover, nav a.active { background-color: var(--secondary-color); }
+
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+
+        .content-section {
+            display: none;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .instructor-profile { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; }
+
+        .profile-image {
+            width: 220px; height: 220px;
+            background-color: #ddd;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            border: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-image svg { width: 120px; height: 120px; fill: var(--primary-color); }
+
+        .profile-info h3 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .profile-info .subtitle { color: var(--secondary-color); font-weight: bold; margin-bottom: 1rem; }
+
+        .history-list { margin-top: 1rem; list-style-type: none; }
+        .history-list li { margin-bottom: 0.5rem; position: relative; padding-left: 1.2rem; }
+        .history-list li::before { content: "✓"; position: absolute; left: 0; color: var(--secondary-color); font-weight: bold; }
+
+        .roulette-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .roulette-wrapper { position: relative; width: 320px; height: 320px; }
+
+        .roulette-arrow {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid var(--accent-color);
+            z-index: 10;
+        }
+
+        canvas {
+            border-radius: 50%;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover { background-color: var(--secondary-color); }
+        .btn:active { transform: scale(0.98); }
+
+        #roulette-result { font-size: 1.3rem; font-weight: bold; color: var(--primary-color); height: 2rem; text-align: center; }
+
+        .calculator-grid { display: flex; flex-direction: column; gap: 2rem; }
+
+        .calc-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .calc-card h3 { margin-bottom: 1rem; color: var(--primary-color); }
+
+        .input-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+        .input-group label { font-weight: 600; min-width: 140px; }
+        .input-group input { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 150px; }
+
+        .calc-result { margin-top: 1rem; padding: 0.8rem; background-color: #eef5fc; border-radius: 4px; font-weight: bold; color: var(--primary-color); }
+
+        footer { text-align: center; padding: 2rem; color: #7f8c8d; font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid #ddd; }
+
+        @media (max-width: 768px) {
+            .instructor-profile { flex-direction: column; text-align: center; }
+            .history-list li { padding-left: 0; }
+            .history-list li::before { display: none; }
+            header { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>👷‍♂️ 건설안전 교육 센터</h1>
+    <nav>
+        <a href="#" class="nav-link active" onclick="switchMenu('instructor', this)">강사 소개</a>
+        <a href="#" class="nav-link" onclick="switchMenu('roulette', this)">퀴즈 룰렛</a>
+        <a href="#" class="nav-link" onclick="switchMenu('calculator', this)">안전 계산기</a>
+    </nav>
+</header>
+
+<main>
+
+    <section id="instructor" class="content-section active">
+        <h2>강사 소개</h2>
+        <div class="instructor-profile">
+            <div class="profile-image">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                </svg>
+            </div>
+            <div class="profile-info">
+                <h3>홍길동 <span style="font-size: 1.1rem; color:#666;">원장/기술사</span></h3>
+                <p class="subtitle">"안전한 현장이 가장 생산성 높은 현장입니다."</p>
+                <p>중대재해처벌법 대응 및 건설현장 맞춤형 안전보건경영체계 구축 전문가로서, 현장 중심의 생생하고 실천 가능한 안전 보건 교육을 제공합니다.</p>
+                <ul class="history-list">
+                    <li>건설안전기술사 / 산업안전지도사 보유</li>
+                    <li>고용노동부 지정 건설재해예방전문지도기관 기술이사 역임</li>
+                    <li>대형 종합건설사(A건설) 안전보건 경영 총괄 10년</li>
+                    <li>주요 건설현장 위험성평가 및 TBM(Tool Box Meeting) 컨설팅 다수</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="roulette" class="content-section">
+        <h2>아이스브레이킹 & 안전 퀴즈 룰렛</h2>
+        <p style="margin-bottom: 1.5rem; text-align: center;">강의 시작 전이나 중간 휴식 시간에 활용해 보세요!</p>
+        <div class="roulette-container">
+            <div class="roulette-wrapper">
+                <div class="roulette-arrow"></div>
+                <canvas id="rouletteCanvas" width="320" height="320"></canvas>
+            </div>
+            <button class="btn" onclick="spinRoulette()">룰렛 돌리기</button>
+            <div id="roulette-result">버튼을 눌러주세요!</div>
+        </div>
+    </section>
+
+    <section id="calculator" class="content-section">
+        <h2>안전보건지표 계산기</h2>
+        <p style="margin-bottom: 1.5rem;">건설현장의 안전 수준을 정량적으로 평가하는 대표적인 지표들을 실시간으로 계산해 보세요.</p>
+        <div class="calculator-grid">
+            <div class="calc-card">
+                <h3>① 도수율 (Frequency Rate)</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 시간당 발생하는 재해 건수</p>
+                <div class="input-group">
+                    <label for="freq-accidents">연간 재해 건수 (건)</label>
+                    <input type="number" id="freq-accidents" placeholder="예: 2" oninput="calculateFrequency()">
+                </div>
+                <div class="input-group">
+                    <label for="freq-hours">연근로 총 시간 (시간)</label>
+                    <input type="number" id="freq-hours" placeholder="예: 500000" oninput="calculateFrequency()">
+                </div>
+                <div class="calc-result" id="freq-result">결과: 값을 입력해 주세요.</div>
+            </div>
+            <div class="calc-card">
+                <h3>② 강도율 (Severity Rate)</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 1,000시간당 발생하는 근로손실일수</p>
+                <div class="input-group">
+                    <label for="sev-days">총 근로손실일수 (일)</label>
+                    <input type="number" id="sev-days" placeholder="예: 150" oninput="calculateSeverity()">
+                </div>
+                <div class="input-group">
+                    <label for="sev-hours">연근로 총 시간 (시간)</label>
+                    <input type="number" id="sev-hours" placeholder="예: 500000" oninput="calculateSeverity()">
+                </div>
+                <div class="calc-result" id="sev-result">결과: 값을 입력해 주세요.</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 건설안전 교육 센터. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function switchMenu(sectionId, element) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        element.classList.add('active');
+        if(sectionId === 'roulette') drawRoulette();
+    }
+
+    const canvas = document.getElementById('rouletteCanvas');
+    const ctx = canvas.getContext('2d');
+    const rouletteItems = ["추락 방지", "보호구 착용", "낙하물 주의", "안전통로", "TBM 활성화", "화재 예방"];
+    const colors = ["#0f4c81", "#1e88e5", "#42a5f5", "#64b5f6", "#90caf9", "#bbdefb"];
+    let isSpinning = false;
+
+    function drawRoulette() {
+        const n = rouletteItems.length;
+        const angle = (2 * Math.PI) / n;
+        const r = canvas.width / 2;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < n; i++) {
+            ctx.beginPath();
+            ctx.moveTo(r, r);
+            ctx.arc(r, r, r, i * angle, (i + 1) * angle);
+            ctx.fillStyle = colors[i];
+            ctx.fill();
+            ctx.stroke();
+            ctx.save();
+            ctx.translate(r, r);
+            ctx.rotate(i * angle + angle / 2);
+            ctx.textAlign = "right";
+            ctx.fillStyle = i < 3 ? "#fff" : "#2c3e50";
+            ctx.font = "bold 14px sans-serif";
+            ctx.fillText(rouletteItems[i], r - 20, 5);
+            ctx.restore();
+        }
+    }
+
+    function spinRoulette() {
+        if (isSpinning) return;
+        isSpinning = true;
+        document.getElementById('roulette-result').innerText = "돌아가는 중...";
+        const randomSpin = Math.floor(Math.random() * 360) + 1440;
+        canvas.style.transform = `rotate(${randomSpin}deg)`;
+        setTimeout(() => {
+            isSpinning = false;
+            const corrected = (360 - (randomSpin % 360) + 270) % 360;
+            const idx = Math.floor(corrected / (360 / rouletteItems.length)) % rouletteItems.length;
+            document.getElementById('roulette-result').innerText = `당첨 주제 🎯 [${rouletteItems[idx]}]`;
+        }, 4000);
+    }
+
+    drawRoulette();
+
+    function calculateFrequency() {
+        const a = parseFloat(document.getElementById('freq-accidents').value);
+        const h = parseFloat(document.getElementById('freq-hours').value);
+        const r = document.getElementById('freq-result');
+        r.innerText = (a >= 0 && h > 0)
+            ? `결과: 도수율 ${((a/h)*1000000).toFixed(2)}`
+            : "결과: 올바른 값을 입력해 주세요.";
+    }
+
+    function calculateSeverity() {
+        const d = parseFloat(document.getElementById('sev-days').value);
+        const h = parseFloat(document.getElementById('sev-hours').value);
+        const r = document.getElementById('sev-result');
+        r.innerText = (d >= 0 && h > 0)
+            ? `결과: 강도율 ${((d/h)*1000).toFixed(2)}`
+            : "결과: 올바른 값을 입력해 주세요.";
+    }
+</script>
+</body>
+</html>
