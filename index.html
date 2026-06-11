@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>안전제일! 건설안전 교육 센터</title>
     <style>
+        /* 기본 스타일 및 테마 정의 (신뢰감을 주는 파란색 톤) */
         :root {
-            --primary-color: #0f4c81;
-            --secondary-color: #1e88e5;
-            --bg-light: #f5f9fc;
+            --primary-color: #0f4c81;    /* 클래식 블루 */
+            --secondary-color: #1e88e5;  /* 밝은 블루 */
+            --bg-light: #f5f9fc;         /* 아주 연한 푸른빛 배경 */
             --text-dark: #2c3e50;
             --white: #ffffff;
-            --accent-color: #e53935;
+            --accent-color: #e53935;     /* 경고/포인트 레드 */
         }
 
         * {
@@ -27,6 +28,7 @@
             line-height: 1.6;
         }
 
+        /* 헤더 & 네비게이션 */
         header {
             background-color: var(--primary-color);
             color: var(--white);
@@ -40,9 +42,18 @@
             align-items: center;
         }
 
-        header h1 { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        header h1 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-        nav { display: flex; gap: 1.5rem; }
+        nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
         nav a {
             color: var(--white);
@@ -53,12 +64,19 @@
             transition: background 0.3s;
         }
 
-        nav a:hover, nav a.active { background-color: var(--secondary-color); }
+        nav a:hover, nav a.active {
+            background-color: var(--secondary-color);
+        }
 
-        main { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        /* 메인 컨텐츠 영역 */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
         .content-section {
-            display: none;
+            display: none; /* 기본적으로 숨김 */
             background: var(--white);
             padding: 2.5rem;
             border-radius: 12px;
@@ -66,7 +84,9 @@
             animation: fadeIn 0.5s ease;
         }
 
-        .content-section.active { display: block; }
+        .content-section.active {
+            display: block; /* 활성화된 섹션만 표시 */
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -81,40 +101,92 @@
             font-size: 1.8rem;
         }
 
-        .instructor-profile { display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; }
+        /* 1. 강사 소개 스타일 */
+        .instructor-profile {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
         .profile-image {
-            width: 220px; height: 220px;
+            width: 220px;
+            height: 220px;
             background-color: #ddd;
             border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border: 5px solid var(--secondary-color);
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             overflow: hidden;
         }
+        
+        .profile-image svg {
+            width: 120px;
+            height: 120px;
+            fill: var(--primary-color);
+        }
 
-        .profile-image svg { width: 120px; height: 120px; fill: var(--primary-color); }
+        .profile-info h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
 
-        .profile-info h3 { font-size: 1.6rem; margin-bottom: 0.5rem; }
-        .profile-info .subtitle { color: var(--secondary-color); font-weight: bold; margin-bottom: 1rem; }
+        .profile-info .subtitle {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
 
-        .history-list { margin-top: 1rem; list-style-type: none; }
-        .history-list li { margin-bottom: 0.5rem; position: relative; padding-left: 1.2rem; }
-        .history-list li::before { content: "✓"; position: absolute; left: 0; color: var(--secondary-color); font-weight: bold; }
+        .history-list {
+            margin-top: 1rem;
+            list-style-type: none;
+        }
 
-        .roulette-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-        .roulette-wrapper { position: relative; width: 320px; height: 320px; }
+        .history-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .history-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* 2. 룰렛 게임 스타일 */
+        .roulette-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .roulette-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
 
         .roulette-arrow {
-            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
-            width: 0; height: 0;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
             border-left: 15px solid transparent;
             border-right: 15px solid transparent;
             border-top: 25px solid var(--accent-color);
             z-index: 10;
         }
 
-        canvas {
+        #rouletteCanvas {
             border-radius: 50%;
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
             transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
@@ -136,9 +208,20 @@
         .btn:hover { background-color: var(--secondary-color); }
         .btn:active { transform: scale(0.98); }
 
-        #roulette-result { font-size: 1.3rem; font-weight: bold; color: var(--primary-color); height: 2rem; text-align: center; }
+        #roulette-result {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            height: 2rem;
+            text-align: center;
+        }
 
-        .calculator-grid { display: flex; flex-direction: column; gap: 2rem; }
+        /* 3. 계산기 스타일 */
+        .calculator-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
 
         .calc-card {
             background: var(--bg-light);
@@ -147,182 +230,654 @@
             border-left: 5px solid var(--primary-color);
         }
 
-        .calc-card h3 { margin-bottom: 1rem; color: var(--primary-color); }
+        .calc-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
 
-        .input-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
-        .input-group label { font-weight: 600; min-width: 140px; }
-        .input-group input { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 150px; }
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
 
-        .calc-result { margin-top: 1rem; padding: 0.8rem; background-color: #eef5fc; border-radius: 4px; font-weight: bold; color: var(--primary-color); }
+        .input-group label {
+            font-weight: 600;
+            min-width: 140px;
+        }
 
-        footer { text-align: center; padding: 2rem; color: #7f8c8d; font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid #ddd; }
+        .input-group input {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .calc-result {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background-color: #eef5fc;
+            border-radius: 4px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* 4. 테트리스 게임 스타일 */
+        .tetris-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tetris-game-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            background: #2c3e50;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            color: var(--white);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #tetrisCanvas {
+            background: #111;
+            border: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .tetris-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 140px;
+        }
+
+        .tetris-info-box {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tetris-info-box h4 {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-bottom: 0.3rem;
+        }
+
+        .tetris-info-box p {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #5dade2;
+        }
+
+        /* 모바일용 테트리스 컨트롤러 버튼 */
+        .tetris-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 260px;
+            margin-top: 0.5rem;
+        }
+
+        .ctrl-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .ctrl-btn:active {
+            background: var(--secondary-color);
+        }
+        .ctrl-btn.span-3 {
+            grid-column: span 3;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #ddd;
+        }
 
         @media (max-width: 768px) {
             .instructor-profile { flex-direction: column; text-align: center; }
             .history-list li { padding-left: 0; }
             .history-list li::before { display: none; }
             header { flex-direction: column; gap: 1rem; }
+            .tetris-game-wrapper { flex-direction: column; align-items: center; }
+            .tetris-side { width: 100%; display: flex; flex-direction: row; gap: 1rem; }
+            .tetris-info-box { flex: 1; margin-bottom: 0; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>👷‍♂️ 건설안전 교육 센터</h1>
-    <nav>
-        <a href="#" class="nav-link active" onclick="switchMenu('instructor', this)">강사 소개</a>
-        <a href="#" class="nav-link" onclick="switchMenu('roulette', this)">퀴즈 룰렛</a>
-        <a href="#" class="nav-link" onclick="switchMenu('calculator', this)">안전 계산기</a>
-    </nav>
-</header>
+    <!-- 헤더 영역 -->
+    <header>
+        <h1>👷‍♂️ 건설안전 교육 센터</h1>
+        <nav>
+            <a href="#" class="nav-link active" onclick="switchMenu('instructor', this)">강사 소개</a>
+            <a href="#" class="nav-link" onclick="switchMenu('roulette', this)">퀴즈 룰렛</a>
+            <a href="#" class="nav-link" onclick="switchMenu('calculator', this)">안전 계산기</a>
+            <a href="#" class="nav-link" onclick="switchMenu('tetris', this)">안전 테트리스</a>
+        </nav>
+    </header>
 
-<main>
-
-    <section id="instructor" class="content-section active">
-        <h2>강사 소개</h2>
-        <div class="instructor-profile">
-            <div class="profile-image">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                </svg>
-            </div>
-            <div class="profile-info">
-                <h3>홍길동 <span style="font-size: 1.1rem; color:#666;">원장/기술사</span></h3>
-                <p class="subtitle">"안전한 현장이 가장 생산성 높은 현장입니다."</p>
-                <p>중대재해처벌법 대응 및 건설현장 맞춤형 안전보건경영체계 구축 전문가로서, 현장 중심의 생생하고 실천 가능한 안전 보건 교육을 제공합니다.</p>
-                <ul class="history-list">
-                    <li>건설안전기술사 / 산업안전지도사 보유</li>
-                    <li>고용노동부 지정 건설재해예방전문지도기관 기술이사 역임</li>
-                    <li>대형 종합건설사(A건설) 안전보건 경영 총괄 10년</li>
-                    <li>주요 건설현장 위험성평가 및 TBM(Tool Box Meeting) 컨설팅 다수</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="roulette" class="content-section">
-        <h2>아이스브레이킹 & 안전 퀴즈 룰렛</h2>
-        <p style="margin-bottom: 1.5rem; text-align: center;">강의 시작 전이나 중간 휴식 시간에 활용해 보세요!</p>
-        <div class="roulette-container">
-            <div class="roulette-wrapper">
-                <div class="roulette-arrow"></div>
-                <canvas id="rouletteCanvas" width="320" height="320"></canvas>
-            </div>
-            <button class="btn" onclick="spinRoulette()">룰렛 돌리기</button>
-            <div id="roulette-result">버튼을 눌러주세요!</div>
-        </div>
-    </section>
-
-    <section id="calculator" class="content-section">
-        <h2>안전보건지표 계산기</h2>
-        <p style="margin-bottom: 1.5rem;">건설현장의 안전 수준을 정량적으로 평가하는 대표적인 지표들을 실시간으로 계산해 보세요.</p>
-        <div class="calculator-grid">
-            <div class="calc-card">
-                <h3>① 도수율 (Frequency Rate)</h3>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 시간당 발생하는 재해 건수</p>
-                <div class="input-group">
-                    <label for="freq-accidents">연간 재해 건수 (건)</label>
-                    <input type="number" id="freq-accidents" placeholder="예: 2" oninput="calculateFrequency()">
+    <!-- 메인 컨텐츠 영역 -->
+    <main>
+        
+        <!-- 1. 강사 소개 섹션 -->
+        <section id="instructor" class="content-section active">
+            <h2>강사 소개</h2>
+            <div class="instructor-profile">
+                <div class="profile-image">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+                    </svg>
                 </div>
-                <div class="input-group">
-                    <label for="freq-hours">연근로 총 시간 (시간)</label>
-                    <input type="number" id="freq-hours" placeholder="예: 500000" oninput="calculateFrequency()">
+                <div class="profile-info">
+                    <h3>홍길동 <span style="font-size: 1.1rem; color:#666;">원장/기술사</span></h3>
+                    <p class="subtitle">"안전한 현장이 가장 생산성 높은 현장입니다."</p>
+                    <p>중대재해처벌법 대응 및 건설현장 맞춤형 안전보건경영체계 구축 전문가로서, 현장 중심의 생생하고 실천 가능한 안전 보건 교육을 제공합니다.</p>
+                    
+                    <ul class="history-list">
+                        <li>건설안전기술사 / 산업안전지도사 보유</li>
+                        <li>고용노동부 지정 건설재해예방전문지도기관 기술이사 역임</li>
+                        <li>대형 종합건설사(A건설) 안전보건 경영 총괄 10년</li>
+                        <li>주요 건설현장 위험성평가 및 TBM(Tool Box Meeting) 컨설팅 다수</li>
+                    </ul>
                 </div>
-                <div class="calc-result" id="freq-result">결과: 값을 입력해 주세요.</div>
             </div>
-            <div class="calc-card">
-                <h3>② 강도율 (Severity Rate)</h3>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 1,000시간당 발생하는 근로손실일수</p>
-                <div class="input-group">
-                    <label for="sev-days">총 근로손실일수 (일)</label>
-                    <input type="number" id="sev-days" placeholder="예: 150" oninput="calculateSeverity()">
+        </section>
+
+        <!-- 2. 룰렛 게임 섹션 -->
+        <section id="roulette" class="content-section">
+            <h2>아이스브레이킹 & 안전 퀴즈 룰렛</h2>
+            <p style="margin-bottom: 1.5rem; text-align: center;">강의 시작 전이나 중간 휴식 시간에 활용해 보세요! 걸린 주제로 가벼운 퀴즈나 발표를 진행합니다.</p>
+            
+            <div class="roulette-container">
+                <div class="roulette-wrapper">
+                    <div class="roulette-arrow"></div>
+                    <canvas id="rouletteCanvas" width="320" height="320"></canvas>
                 </div>
-                <div class="input-group">
-                    <label for="sev-hours">연근로 총 시간 (시간)</label>
-                    <input type="number" id="sev-hours" placeholder="예: 500000" oninput="calculateSeverity()">
-                </div>
-                <div class="calc-result" id="sev-result">결과: 값을 입력해 주세요.</div>
+                <button class="btn" onclick="spinRoulette()">룰렛 돌리기</button>
+                <div id="roulette-result">버튼을 눌러주세요!</div>
             </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+        <!-- 3. 계산기 메뉴 섹션 -->
+        <section id="calculator" class="content-section">
+            <h2>안전보건지표 계산기</h2>
+            <p style="margin-bottom: 1.5rem;">건설현장의 안전 수준을 정량적으로 평가하는 대표적인 지표들을 실시간으로 계산해 보세요.</p>
+            
+            <div class="calculator-grid">
+                <div class="calc-card">
+                    <h3>① 도수율 (Frequency Rate)</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 시간당 발생하는 재해 건수 (현장의 재해 빈도 파악)</p>
+                    <div class="input-group">
+                        <label for="freq-accidents">연간 재해 건수 (건)</label>
+                        <input type="number" id="freq-accidents" placeholder="예: 2" oninput="calculateFrequency()">
+                    </div>
+                    <div class="input-group">
+                        <label for="freq-hours">연근로 총 시간 (시간)</label>
+                        <input type="number" id="freq-hours" placeholder="예: 500000" oninput="calculateFrequency()">
+                    </div>
+                    <div class="calc-result" id="freq-result">결과: 값을 입력해 주세요.</div>
+                </div>
 
-<footer>
-    <p>&copy; 2026 건설안전 교육 센터. All Rights Reserved.</p>
-</footer>
+                <div class="calc-card">
+                    <h3>② 강도율 (Severity Rate)</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">연근로 총 1,000시간당 발생하는 근로손실일수 (재해의 무겁고 가벼운 정도 파악)</p>
+                    <div class="input-group">
+                        <label for="sev-days">총 근로손실일수 (일)</label>
+                        <input type="number" id="sev-days" placeholder="예: 150" oninput="calculateSeverity()">
+                    </div>
+                    <div class="input-group">
+                        <label for="sev-hours">연근로 총 시간 (시간)</label>
+                        <input type="number" id="sev-hours" placeholder="예: 500000" oninput="calculateSeverity()">
+                    </div>
+                    <div class="calc-result" id="sev-result">결과: 값을 입력해 주세요.</div>
+                </div>
+            </div>
+        </section>
 
-<script>
-    function switchMenu(sectionId, element) {
-        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-        element.classList.add('active');
-        if(sectionId === 'roulette') drawRoulette();
-    }
+        <!-- 4. 테트리스 게임 섹션 -->
+        <section id="tetris" class="content-section">
+            <h2>집중력 향상 안전 테트리스</h2>
+            <p style="margin-bottom: 1.5rem; text-align: center;">교육 피로도를 낮추고 안전 집중력을 강화하기 위한 미니 게임입니다. (PC: 방향키 이용 / 모바일: 하단 버튼 이용)</p>
+            
+            <div class="tetris-container">
+                <div class="tetris-game-wrapper">
+                    <!-- 테트리스 캔버스 (10열 x 20행, 블록 크기 24px 기준) -->
+                    <canvas id="tetrisCanvas" width="240" height="480"></canvas>
+                    
+                    <div class="tetris-side">
+                        <div class="tetris-info-box">
+                            <h4>SCORE</h4>
+                            <p id="tetris-score">0</p>
+                        </div>
+                        <div class="tetris-info-box">
+                            <h4>LEVEL</h4>
+                            <p id="tetris-level">1</p>
+                        </div>
+                        <button class="btn" id="tetris-start-btn" onclick="toggleTetris()">게임 시작</button>
+                    </div>
+                </div>
 
-    const canvas = document.getElementById('rouletteCanvas');
-    const ctx = canvas.getContext('2d');
-    const rouletteItems = ["추락 방지", "보호구 착용", "낙하물 주의", "안전통로", "TBM 활성화", "화재 예방"];
-    const colors = ["#0f4c81", "#1e88e5", "#42a5f5", "#64b5f6", "#90caf9", "#bbdefb"];
-    let isSpinning = false;
+                <!-- 모바일 전용 조작 패드 -->
+                <div class="tetris-controls">
+                    <button class="ctrl-btn" onclick="controlTetris('rotate')">🔄</button>
+                    <button class="ctrl-btn" onclick="controlTetris('drop')">⚡</button>
+                    <button class="ctrl-btn" onclick="controlTetris('rotate')">🔄</button>
+                    <button class="ctrl-btn" onclick="controlTetris('left')">◀</button>
+                    <button class="ctrl-btn" onclick="controlTetris('down')">▼</button>
+                    <button class="ctrl-btn" onclick="controlTetris('right')">▶</button>
+                </div>
+            </div>
+        </section>
 
-    function drawRoulette() {
-        const n = rouletteItems.length;
-        const angle = (2 * Math.PI) / n;
-        const r = canvas.width / 2;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < n; i++) {
-            ctx.beginPath();
-            ctx.moveTo(r, r);
-            ctx.arc(r, r, r, i * angle, (i + 1) * angle);
-            ctx.fillStyle = colors[i];
-            ctx.fill();
-            ctx.stroke();
-            ctx.save();
-            ctx.translate(r, r);
-            ctx.rotate(i * angle + angle / 2);
-            ctx.textAlign = "right";
-            ctx.fillStyle = i < 3 ? "#fff" : "#2c3e50";
-            ctx.font = "bold 14px sans-serif";
-            ctx.fillText(rouletteItems[i], r - 20, 5);
-            ctx.restore();
+    </main>
+
+    <footer>
+        <p>&copy; 2026 건설안전 교육 센터. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        /* === [메뉴 전환 로직] === */
+        function switchMenu(sectionId, element) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+            element.classList.add('active');
+
+            if(sectionId === 'roulette') {
+                drawRoulette();
+            }
+            
+            // 테트리스 메뉴를 벗어나면 게임 자동 일시정지
+            if(sectionId !== 'tetris' && tetrisRunning) {
+                toggleTetris();
+            }
         }
-    }
 
-    function spinRoulette() {
-        if (isSpinning) return;
-        isSpinning = true;
-        document.getElementById('roulette-result').innerText = "돌아가는 중...";
-        const randomSpin = Math.floor(Math.random() * 360) + 1440;
-        canvas.style.transform = `rotate(${randomSpin}deg)`;
-        setTimeout(() => {
-            isSpinning = false;
-            const corrected = (360 - (randomSpin % 360) + 270) % 360;
-            const idx = Math.floor(corrected / (360 / rouletteItems.length)) % rouletteItems.length;
-            document.getElementById('roulette-result').innerText = `당첨 주제 🎯 [${rouletteItems[idx]}]`;
-        }, 4000);
-    }
+        /* === [룰렛 게임 로직] === */
+        const canvas = document.getElementById('rouletteCanvas');
+        const ctx = canvas.getContext('2d');
+        const rouletteItems = ["추락 방지", "보호구 착용", "낙하물 주의", "안전통로", "TBM 활성화", "화재 예방"];
+        const colors = ["#0f4c81", "#1e88e5", "#42a5f5", "#64b5f6", "#90caf9", "#bbdefb"];
+        let isSpinning = false;
 
-    drawRoulette();
+        function drawRoulette() {
+            const numSegments = rouletteItems.length;
+            const anglePerSegment = (2 * Math.PI) / numSegments;
+            const radius = canvas.width / 2;
 
-    function calculateFrequency() {
-        const a = parseFloat(document.getElementById('freq-accidents').value);
-        const h = parseFloat(document.getElementById('freq-hours').value);
-        const r = document.getElementById('freq-result');
-        r.innerText = (a >= 0 && h > 0)
-            ? `결과: 도수율 ${((a/h)*1000000).toFixed(2)}`
-            : "결과: 올바른 값을 입력해 주세요.";
-    }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    function calculateSeverity() {
-        const d = parseFloat(document.getElementById('sev-days').value);
-        const h = parseFloat(document.getElementById('sev-hours').value);
-        const r = document.getElementById('sev-result');
-        r.innerText = (d >= 0 && h > 0)
-            ? `결과: 강도율 ${((d/h)*1000).toFixed(2)}`
-            : "결과: 올바른 값을 입력해 주세요.";
-    }
-</script>
+            for (let i = 0; i < numSegments; i++) {
+                const startAngle = i * anglePerSegment;
+                const endAngle = startAngle + anglePerSegment;
+
+                ctx.beginPath();
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, startAngle, endAngle);
+                ctx.fillStyle = colors[i];
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(radius, radius);
+                ctx.rotate(startAngle + anglePerSegment / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = i < 3 ? "#ffffff" : "#2c3e50";
+                ctx.font = "bold 14px Pretendard";
+                ctx.fillText(rouletteItems[i], radius - 20, 5);
+                ctx.restore();
+            }
+        }
+
+        function spinRoulette() {
+            if (isSpinning) return;
+            isSpinning = true;
+            document.getElementById('roulette-result').innerText = "돌아가는 중...";
+
+            const numSegments = rouletteItems.length;
+            const randomSpin = Math.floor(Math.random() * 360) + 1440;
+            
+            canvas.style.transform = `rotate(${randomSpin}deg)`;
+
+            setTimeout(() => {
+                isSpinning = false;
+                const actualDegrees = randomSpin % 360;
+                const correctedDegrees = (360 - actualDegrees + 270) % 360;
+                const selectedIndex = Math.floor(correctedDegrees / (360 / numSegments)) % numSegments;
+                document.getElementById('roulette-result').innerText = `당첨 주제 🎯 [${rouletteItems[selectedIndex]}]`;
+            }, 4000);
+        }
+
+        drawRoulette();
+
+        /* === [안전 계산기 로직] === */
+        function calculateFrequency() {
+            const accidents = parseFloat(document.getElementById('freq-accidents').value);
+            const hours = parseFloat(document.getElementById('freq-hours').value);
+            const resultDiv = document.getElementById('freq-result');
+
+            if (accidents >= 0 && hours > 0) {
+                const frequencyRate = (accidents / hours) * 1000000;
+                resultDiv.innerText = `결과: 도수율은 ${frequencyRate.toFixed(2)} 입니다. (근로자 100만 시간당 ${accidents > 0 ? frequencyRate.toFixed(1) : 0}건 발생 수준)`;
+            } else {
+                resultDiv.innerText = "결과: 올바른 값을 입력해 주세요.";
+            }
+        }
+
+        function calculateSeverity() {
+            const days = parseFloat(document.getElementById('sev-days').value);
+            const hours = parseFloat(document.getElementById('sev-hours').value);
+            const resultDiv = document.getElementById('sev-result');
+
+            if (days >= 0 && hours > 0) {
+                const severityRate = (days / hours) * 1000;
+                resultDiv.innerText = `결과: 강도율은 ${severityRate.toFixed(2)} 입니다. (연간 1,000근로시간당 ${days > 0 ? severityRate.toFixed(1) : 0}일의 손실 발생 수준)`;
+            } else {
+                resultDiv.innerText = "결과: 올바른 값을 입력해 주세요.";
+            }
+        }
+
+        /* === [테트리스 게임 핵심 로직] === */
+        const tCanvas = document.getElementById('tetrisCanvas');
+        const tCtx = tCanvas.getContext('2d');
+        const ROW = 20;
+        const COL = 10;
+        const SQ = 24; // 블록 한 칸의 크기 (px)
+        const VACANT = "#111111"; // 빈 칸 색상
+
+        // 테트리스 블록 색상 세트 (파란색 메인 테마에 어울리는 색상 배치)
+        const PIECE_COLORS = ["#1e88e5", "#42a5f5", "#0f4c81", "#f4d03f", "#58d68d", "#eb5757", "#bbdefb"];
+
+        // 블록들의 형태 정의 (7종 모양인 I, J, L, O, S, T, Z 모양)
+        const PIECES = [
+            [[1,1,1,1]], // I
+            [[1,1,1],[0,0,1]], // J
+            [[1,1,1],[1,0,0]], // L
+            [[1,1],[1,1]], // O
+            [[0,1,1],[1,1,0]], // S
+            [[1,1,1],[0,1,0]], // T
+            [[1,1,0],[0,1,1]]  // Z
+        ];
+
+        let board = [];
+        let tetrisRunning = false;
+        let score = 0;
+        let level = 1;
+        let gameInterval;
+        let currentPiece;
+        let dropStart = Date.now();
+        let speed = 800; // 블록이 내려오는 속도 (ms)
+
+        // 게임 보드 판 초기화 함수
+        function initBoard() {
+            for (let r = 0; r < ROW; r++) {
+                board[r] = [];
+                for (let c = 0; c < COL; c++) {
+                    board[r][c] = VACANT;
+                }
+            }
+        }
+
+        // 보드에 단일 칸 그리기 함수
+        function drawSquare(x, y, color) {
+            tCtx.fillStyle = color;
+            tCtx.fillRect(x * SQ, y * SQ, SQ, SQ);
+            tCtx.strokeStyle = "#2c3e50";
+            tCtx.strokeRect(x * SQ, y * SQ, SQ, SQ);
+        }
+
+        // 전체 보드 판 렌더링 함수
+        function drawBoard() {
+            for (let r = 0; r < ROW; r++) {
+                for (let c = 0; c < COL; c++) {
+                    drawSquare(c, r, board[r][c]);
+                }
+            }
+        }
+
+        // 블록 객체 생성자 함수
+        function Piece(tetromino, color) {
+            this.tetromino = tetromino;
+            this.color = color;
+            this.activeTetromino = this.tetromino;
+            this.x = 3;
+            this.y = -1;
+        }
+
+        // 블록 화면 표시/지우기 기능 구현
+        Piece.prototype.fill = function(color) {
+            for (let r = 0; r < this.activeTetromino.length; r++) {
+                for (let c = 0; c < this.activeTetromino[r].length; c++) {
+                    if (this.activeTetromino[r][c]) {
+                        if (this.y + r >= 0) {
+                            drawSquare(this.x + c, this.y + r, color);
+                        }
+                    }
+                }
+            }
+        };
+
+        Piece.prototype.draw = function() { this.fill(this.color); };
+        Piece.prototype.unDraw = function() { this.fill(VACANT); };
+
+        // 움직임 중 충돌 감지 로직
+        Piece.prototype.collision = function(x, y, piece) {
+            for (let r = 0; r < piece.length; r++) {
+                for (let c = 0; c < piece[r].length; c++) {
+                    if (!piece[r][c]) continue;
+                    let newX = this.x + c + x;
+                    let newY = this.y + r + y;
+
+                    if (newX < 0 || newX >= COL || newY >= ROW) return true;
+                    if (newY < 0) continue;
+                    if (board[newY][newX] !== VACANT) return true;
+                }
+            }
+            return false;
+        };
+
+        // 좌, 우, 아래 움직임 함수
+        Piece.prototype.moveDown = function() {
+            if (!this.collision(0, 1, this.activeTetromino)) {
+                this.unDraw();
+                this.y++;
+                this.draw();
+            } else {
+                this.lock();
+                generateNewPiece();
+            }
+        };
+
+        Piece.prototype.moveRight = function() {
+            if (!this.collision(1, 0, this.activeTetromino)) {
+                this.unDraw();
+                this.x++;
+                this.draw();
+            }
+        };
+
+        Piece.prototype.moveLeft = function() {
+            if (!this.collision(-1, 0, this.activeTetromino)) {
+                this.unDraw();
+                this.x--;
+                this.draw();
+            }
+        };
+
+        // 블록 회전 로직
+        Piece.prototype.rotate = function() {
+            let nextPattern = [];
+            let n = this.activeTetromino.length;
+            let m = this.activeTetromino[0].length;
+            
+            for (let i = 0; i < m; i++) {
+                nextPattern[i] = [];
+                for (let j = 0; j < n; j++) {
+                    nextPattern[i][j] = this.activeTetromino[n - 1 - j][i];
+                }
+            }
+
+            if (!this.collision(0, 0, nextPattern)) {
+                this.unDraw();
+                this.activeTetromino = nextPattern;
+                this.draw();
+            }
+        };
+
+        // 블록 바닥 안착 및 줄 삭제 처리
+        Piece.prototype.lock = function() {
+            for (let r = 0; r < this.activeTetromino.length; r++) {
+                for (let c = 0; c < this.activeTetromino[r].length; c++) {
+                    if (!this.activeTetromino[r][c]) continue;
+                    if (this.y + r < 0) {
+                        alert("게임 오버! 다시 도전해 보세요.");
+                        resetTetris();
+                        return;
+                    }
+                    board[this.y + r][this.x + c] = this.color;
+                }
+            }
+
+            // 가득 찬 줄 체크 및 삭제 후 점수 반영
+            let linesCleared = 0;
+            for (let r = 0; r < ROW; r++) {
+                let isRowFull = true;
+                for (let c = 0; c < COL; c++) {
+                    if (board[r][c] === VACANT) {
+                        isRowFull = false;
+                        break;
+                    }
+                }
+                if (isRowFull) {
+                    board.splice(r, 1);
+                    board.unshift(new Array(COL).fill(VACANT));
+                    linesCleared++;
+                }
+            }
+
+            if (linesCleared > 0) {
+                score += linesCleared * 100 * level;
+                document.getElementById('tetris-score').innerText = score;
+                if (score >= level * 500) {
+                    level++;
+                    speed = Math.max(200, speed - 100);
+                    document.getElementById('tetris-level').innerText = level;
+                }
+            }
+            drawBoard();
+        };
+
+        // 랜덤 블록 생성
+        function generateNewPiece() {
+            let r = Math.floor(Math.random() * PIECES.length);
+            currentPiece = new Piece(PIECES[r], PIECE_COLORS[r]);
+        }
+
+        // 실시간 게임 루프 제어
+        function tetrisLoop() {
+            if (!tetrisRunning) return;
+            let now = Date.now();
+            let delta = now - dropStart;
+            if (delta > speed) {
+                currentPiece.moveDown();
+                dropStart = Date.now();
+            }
+            gameInterval = requestAnimationFrame(tetrisLoop);
+        }
+
+        // 게임 시작 및 일시정지 제어 토글
+        function toggleTetris() {
+            const btn = document.getElementById('tetris-start-btn');
+            if (!tetrisRunning) {
+                tetrisRunning = true;
+                btn.innerText = "일시 정지";
+                btn.style.backgroundColor = "#e53935";
+                if(board.length === 0) resetTetris();
+                dropStart = Date.now();
+                tetrisLoop();
+            } else {
+                tetrisRunning = false;
+                btn.innerText = "게임 재개";
+                btn.style.backgroundColor = "var(--primary-color)";
+                cancelAnimationFrame(gameInterval);
+            }
+        }
+
+        // 리셋 함수
+        function resetTetris() {
+            initBoard();
+            drawBoard();
+            score = 0;
+            level = 1;
+            speed = 800;
+            document.getElementById('tetris-score').innerText = score;
+            document.getElementById('tetris-level').innerText = level;
+            generateNewPiece();
+        }
+
+        // PC 키보드 입력 매핑 이벤트
+        document.addEventListener("keydown", function(event) {
+            if (!tetrisRunning) return;
+            if (event.key === "ArrowLeft") currentPiece.moveLeft();
+            else if (event.key === "ArrowUp") currentPiece.rotate();
+            else if (event.key === "ArrowRight") currentPiece.moveRight();
+            else if (event.key === "ArrowDown") currentPiece.moveDown();
+            else if (event.key === " ") {
+                while (!currentPiece.collision(0, 1, currentPiece.activeTetromino)) {
+                    currentPiece.y++;
+                }
+                currentPiece.moveDown();
+            }
+        });
+
+        // 모바일 터치 패드 입력 매핑 함수
+        function controlTetris(command) {
+            if (!tetrisRunning) return;
+            if (command === 'left') currentPiece.moveLeft();
+            else if (command === 'right') currentPiece.moveRight();
+            else if (command === 'down') currentPiece.moveDown();
+            else if (command === 'rotate') currentPiece.rotate();
+            else if (command === 'drop') {
+                while (!currentPiece.collision(0, 1, currentPiece.activeTetromino)) {
+                    currentPiece.y++;
+                }
+                currentPiece.moveDown();
+            }
+        }
+
+        // 웹 최초 로드 시 테트리스 초기 구동
+        initBoard();
+        drawBoard();
+    </script>
 </body>
 </html>
